@@ -41,8 +41,10 @@ for catInd = 1:numCategories
                 else
                     train = addInstance(fileInstName, filters, catNum, train, params);
                 end
+                clear fileInstName;
             end
         end
+        clear fileCatName instance;
     end
 end
 
@@ -105,12 +107,17 @@ for imgInd = subSampleInds
     
     % add for sanity check
     data.file{end+1} = instanceData(imgInd).name(1:startInd);
+    
+    clear fileImgName startInd maskImgName img fim rows cols;
 end
+
+clear instanceData;
 return
 
 
 function data = cutData(data)
 assert(length(data.labels) == data.count);
+whos('data');
 data.data = data.data(1:data.count,:,:,:);
 data.extra = data.extra(1:data.count,:);
 return

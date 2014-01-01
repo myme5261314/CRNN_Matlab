@@ -33,12 +33,14 @@ depthAcc = trainSoftmax(depthTrain, depthTest,params);
 
 %% Combine RGB + Depth
 [cTrain cTest] = combineData(rgbTrain, rgbTest, depthTrain, depthTest);
+whos
+memory
 clear rgbTrain rgbTest depthTrain depthTest;
 
 % test without extra features when combined
 params.extraFeatures = false;
 combineAcc = trainSoftmax(cTrain, cTest, params);
-
+clear cTrain cTest;
 % if matlabpool('size')>0
 %     matlabpool close;
 % end
@@ -52,6 +54,8 @@ disp('Pretraining CNN Filters...');
 % forward prop CNN
 disp('Forward prop through CNN...');
 [train test] = forwardCNN(filters,params);
+
+clear filters;
 
 % forward prop RNNs
 disp('Forward prop through RNN...');
@@ -76,11 +80,13 @@ cTest.data = bsxfun(@rdivide, bsxfun(@minus, cTest.data,m),s);
 % add the labels
 cTrain.labels = rgbTrain.labels;
 cTest.labels = rgbTest.labels;
+
+clear m s;
 return;
 
 function testCompatability(rgb, depth)
 assert(length(rgb.file) == length(depth.file));
-for i = 1:length(rgb.file)
+parfor i = 1:length(rgb.file)
     assert(strcmp(rgb.file{i}, depth.file{i}));
 end
 
