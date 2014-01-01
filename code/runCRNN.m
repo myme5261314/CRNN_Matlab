@@ -12,13 +12,14 @@ end
 
 %record the start time
 global s;
-s = 'Start';
+s = 'Start:';
 recordtime(s);
 
 %% Run RGB
 disp('Forward propagating RGB data');
 parmas.depth = false;
 
+s = 'RGB:';
 % load and forward propagate RGB data
 [rgbTrain rgbTest] = forwardProp(params);
 
@@ -33,6 +34,7 @@ recordtime(strcat(s,'END of Reural&Network'));
 disp('Forward propagating depth data');
 params.depth = true;
 
+s = 'Depth:';
 % load and forward propagate depth data
 [depthTrain depthTest] = forwardProp(params);
 
@@ -43,6 +45,7 @@ depthAcc = trainSoftmax(depthTrain, depthTest,params);
 recordtime(strcat(s,'End of Reural&Network'));
 
 %% Combine RGB + Depth
+s = 'Combine:';
 [cTrain cTest] = combineData(rgbTrain, rgbTest, depthTrain, depthTest);
 whos
 memory
