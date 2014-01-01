@@ -96,7 +96,7 @@ while numHave < numWant
                     
                     % get all possible patches
                     imgPatches = [];
-                    for ch = 1:size(img,3)
+                    parfor ch = 1:size(img,3)
                         imgPatches = [imgPatches; im2col(img(:,:,ch), [rfSize rfSize])];
                     end
                     

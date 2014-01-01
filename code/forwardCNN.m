@@ -11,7 +11,7 @@ test = struct('data',zeros(100,nf,fi,fj),'labels',[],'count',0,'extra',zeros(100
 
 %% load the split information
 load([params.dataFolder 'splits.mat'],'splits');
-% testInstances specifies which instance from each class will used for testing
+% testInstances specifies which instance from each class will used parfor testing
 testInstances = splits(:,params.split);
 
 % grab all categories in data folder
