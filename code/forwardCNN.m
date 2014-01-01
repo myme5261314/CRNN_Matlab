@@ -26,6 +26,7 @@ catNum = 0;
 for catInd = 1:numCategories
     if mod(catInd,10) == 0
         disp(['---Category: ' num2str(catInd) ' out of ' num2str(numCategories) '---']);
+        recordtime(' ');
     end
     if isValid(categories(catInd).name)
         catNum = catNum+1;
@@ -122,6 +123,10 @@ data.data = data.data(1:data.count,:,:,:);
 data.extra = data.extra(1:data.count,:);
 return
 
-
+function disp_str = recordtime(str)
+disp_str = datestr(now,'yyyy-mm-dd HH:MM:SS');
+disp_str = sprintf('%s Running At: %s',str,disp_str);
+disp(disp_str);
+return
 
 
