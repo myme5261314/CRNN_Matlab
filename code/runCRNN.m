@@ -3,6 +3,13 @@ function [combineAcc rgbAcc depthAcc] = runCRNN()
 params = initParams();
 disp(params);
 
+%Initialize Matlab Parallel Computing Enviornment by Xaero | Macro2.cn
+if matlabpool('size')<=0
+    matlabpool open;
+else
+    disp('Already initialized');
+end
+
 %% Run RGB
 disp('Forward propagating RGB data');
 parmas.depth = false;
@@ -31,6 +38,10 @@ clear rgbTrain rgbTest depthTrain depthTest;
 % test without extra features when combined
 params.extraFeatures = false;
 combineAcc = trainSoftmax(cTrain, cTest, params);
+
+if matlabpool('size')>0
+    matlabpool close;
+end
 return;
 
 function [train test] = forwardProp(params)
