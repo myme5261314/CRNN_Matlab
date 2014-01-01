@@ -39,9 +39,9 @@ clear rgbTrain rgbTest depthTrain depthTest;
 params.extraFeatures = false;
 combineAcc = trainSoftmax(cTrain, cTest, params);
 
-if matlabpool('size')>0
-    matlabpool close;
-end
+% if matlabpool('size')>0
+%     matlabpool close;
+% end
 return;
 
 function [train test] = forwardProp(params)

@@ -6,16 +6,15 @@ showFilters = false;
 patches = getPatches(params); 
 
 
+
 %% get whitening info from patches
 % normalize for contrast
 patches = bsxfun(@rdivide, bsxfun(@minus, patches, mean(patches,2)), sqrt(var(patches,[],2)+10));
 
-spmd
 C = cov(patches);
 M = mean(patches);
 [V,D] = eig(C);
 P = V * diag(sqrt(1./(diag(D) + 0.1))) * V';
-end
 
 % Now whiten patches before pretraining
 patches = bsxfun(@minus, patches, M) * P;
