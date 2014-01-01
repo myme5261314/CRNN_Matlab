@@ -9,7 +9,7 @@ seg = double(seg);
 tolerance = 0.01;
 [missX missY] = find(orig == 0);
 distBound = zeros(size(missX));
-parfor i = 1:length(missX);
+for i = 1:length(missX);
     distBound(i) = min(min(missX(i),size(orig,1)-missX(i)),min(missY(i),size(orig,2) - missY(i)));
 end
 sorted = sortrows([missX missY distBound],3);

@@ -37,7 +37,7 @@ ker(:) = 1/(winSize*winSize);
 oi = (size(in,2)-winSize)/winStep + 1;
 oj = (size(in,3)-winSize)/winStep + 1;
 out = zeros(size(in,1),oi,oj);
-parfor i=1:size(in,1)
+for i=1:size(in,1)
     from = squeeze(in(i,:,:));
     to = conv2(from,ker,'valid');
     dsi = 1:winStep:size(to,1);
@@ -82,7 +82,7 @@ filtSize = 9;
 k = fspecial('gaussian',filtSize,1.591);
 
 ker = zeros(size(in,1),size(k,1),size(k,2));
-parfor i=1:size(in,1)
+for i=1:size(in,1)
     ker(i,:) = k(:);
 end
 ker = ker / sum(ker(:));
@@ -109,14 +109,14 @@ function out = multiconv(in,ker)
 % dimension
 %
 out = zeros(size(in));
-parfor i=1:size(in,1)
+for i=1:size(in,1)
     cin = squeeze(in(i,:,:));
     cker = squeeze(ker(i,:,:));
     out(i,:,:) = conv2(cin,cker,'same');
 end
 clear cin cker;
 sout = squeeze(sum(out));
-parfor i=1:size(out,1)
+for i=1:size(out,1)
     out(i,:) = sout(:);
 end
 clear sout;
